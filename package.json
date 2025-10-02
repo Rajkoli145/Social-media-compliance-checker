@@ -1,0 +1,33 @@
+{
+  "name": "social-media-compliance-checker",
+  "version": "1.0.0",
+  "description": "A tool to check if social media posts/campaigns follow compliance rules before reaching customers",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'No build process needed for this static site'",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": [
+    "social-media",
+    "compliance",
+    "content-moderation",
+    "brand-safety",
+    "javascript",
+    "firebase",
+    "trie-algorithm"
+  ],
+  "author": "Cascade AI",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/social-media-compliance-checker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/social-media-compliance-checker/issues"
+  },
+  "homepage": "https://github.com/yourusername/social-media-compliance-checker#readme"
+}

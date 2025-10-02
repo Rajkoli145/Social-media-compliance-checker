@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Checker - Social Media Compliance</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">
+                    <h2><span class="material-symbols-outlined">shield</span> Compliance Checker</h2>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Dashboard</a></li>
+                    <li><a href="checker.html" class="active">Check Post</a></li>
+                    <li><a href="admin.html">Admin</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="checker-page">
+            <div class="form-container">
+                <h1>Check Your Social Media Post</h1>
+                <p>Enter your content below to verify compliance with platform guidelines and regulations.</p>
+
+                <form id="complianceForm" class="compliance-form">
+                    <div class="form-group">
+                        <label for="platform">Select Platform:</label>
+                        <select id="platform" name="platform" required>
+                            <option value="">Choose a platform...</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="twitter">Twitter/X</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="linkedin">LinkedIn</option>
+                            <option value="tiktok">TikTok</option>
+                            <option value="ad-campaign">Ad Campaign</option>
+                            <option value="email-marketing">Email Marketing</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">Post Content:</label>
+                        <textarea 
+                            id="content" 
+                            name="content" 
+                            placeholder="Enter your social media post content here..."
+                            rows="6"
+                            required
+                        ></textarea>
+                        <div class="character-count">
+                            <span id="charCount">0</span> characters
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-button" id="checkButton">
+                        <span class="button-text">Check Compliance</span>
+                        <span class="loading-spinner" style="display: none;"><span class="material-symbols-outlined">hourglass_empty</span></span>
+                    </button>
+                </form>
+
+                <div id="result" class="result-container" style="display: none;">
+                    <!-- Results will be displayed here -->
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Social Media Compliance Checker. Built for brand safety.</p>
+        </footer>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        
+        // Make Firebase available globally
+        window.firebaseApp = initializeApp(window.firebaseConfig);
+        window.db = getFirestore(window.firebaseApp);
+    </script>
+    <script src="firebase-config.js"></script>
+    <script src="compliance-engine.js"></script>
+    <script src="checker.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - Social Media Compliance</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">
+                    <h2><span class="material-symbols-outlined">shield</span> Compliance Checker</h2>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Dashboard</a></li>
+                    <li><a href="checker.html">Check Post</a></li>
+                    <li><a href="admin.html">Admin</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="dashboard-page">
+            <div class="dashboard-header">
+                <h1>Compliance Analytics Dashboard</h1>
+                <p>Real-time insights into your social media compliance performance</p>
+                <button id="refreshData" class="refresh-button"><span class="material-symbols-outlined">refresh</span> Refresh Data</button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="material-symbols-outlined stat-icon">bar_chart</span>
+                    <div class="stat-content">
+                        <h3 id="totalPosts">0</h3>
+                        <p>Total Posts Checked</p>
+                    </div>
+                </div>
+                <div class="stat-card compliant">
+                    <span class="material-symbols-outlined stat-icon">check_circle</span>
+                    <div class="stat-content">
+                        <h3 id="compliantPosts">0</h3>
+                        <p>Compliant Posts</p>
+                    </div>
+                </div>
+                <div class="stat-card non-compliant">
+                    <span class="material-symbols-outlined stat-icon">cancel</span>
+                    <div class="stat-content">
+                        <h3 id="nonCompliantPosts">0</h3>
+                        <p>Non-Compliant Posts</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="material-symbols-outlined stat-icon">trending_up</span>
+                    <div class="stat-content">
+                        <h3 id="complianceRate">0%</h3>
+                        <p>Compliance Rate</p>
+                    </div>
+                </div>
+                <div class="stat-card non-compliant-rate">
+                    <span class="material-symbols-outlined stat-icon">trending_down</span>
+                    <div class="stat-content">
+                        <h3 id="nonComplianceRate">0%</h3>
+                        <p>Non-Compliance Rate</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Compliance Overview</h3>
+                    <canvas id="complianceChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Platform-wise Compliance</h3>
+                    <canvas id="platformChart"></canvas>
+                </div>
+            </div>
+
+            <div class="violations-section">
+                <h3>Top Violation Reasons</h3>
+                <div id="violationsTable" class="violations-table">
+                    <!-- Violations will be populated here -->
+                </div>
+            </div>
+
+            <div class="funnel-section">
+                <h3>Business Funnel Impact</h3>
+                <p class="funnel-description">
+                    Only compliant posts are allowed into the funnel; non-compliant posts are blocked to protect brand reputation.
+                </p>
+                <div class="funnel-container">
+                    <div class="funnel-stage">
+                        <div class="funnel-box prospects">
+                            <h4>Prospects</h4>
+                            <p id="prospectsCount">1000</p>
+                            <small>Total audience reached</small>
+                        </div>
+                    </div>
+                    <div class="funnel-arrow"><span class="material-symbols-outlined">arrow_forward</span></div>
+                    <div class="funnel-stage">
+                        <div class="funnel-box qualified">
+                            <h4>Qualified</h4>
+                            <p id="qualifiedCount">0</p>
+                            <small>Compliant posts only</small>
+                        </div>
+                    </div>
+                    <div class="funnel-arrow"><span class="material-symbols-outlined">arrow_forward</span></div>
+                    <div class="funnel-stage">
+                        <div class="funnel-box customers">
+                            <h4>Customers</h4>
+                            <p id="customersCount">0</p>
+                            <small>Converted leads</small>
+                        </div>
+                    </div>
+                    <div class="funnel-arrow"><span class="material-symbols-outlined">arrow_forward</span></div>
+                    <div class="funnel-stage">
+                        <div class="funnel-box loyal">
+                            <h4>Loyal</h4>
+                            <p id="loyalCount">0</p>
+                            <small>Repeat customers</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="funnel-blocked">
+                    <div class="blocked-content">
+                        <h4>🚫 Blocked Content</h4>
+                        <p id="blockedCount">0</p>
+                        <small>Non-compliant posts prevented from reaching customers</small>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Post Details Modal -->
+        <div id="postDetailsModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalTitle">Post Details</h2>
+                    <span class="close-modal" id="closeModal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div id="postsList" class="posts-list">
+                        <!-- Posts will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Social Media Compliance Checker. Built for brand safety.</p>
+        </footer>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        
+        // Make Firebase available globally
+        window.firebaseApp = initializeApp(window.firebaseConfig);
+        window.db = getFirestore(window.firebaseApp);
+    </script>
+    <script src="firebase-config.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
