@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return complianceEngine.checkCompliance(content, platform);
     }
 
-    // Save result to Firestore
+    // Save result to Firestore with subcollections
     async function saveToFirestore(content, platform, result) {
         try {
             if (!window.db) {
@@ -75,19 +75,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const { addDoc, collection, serverTimestamp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
             
+            // Determine which subcollection to use
+            const subcollectionName = result.isCompliant ? 'compliant' : 'non-compliant';
+            
             const docData = {
                 postId: generatePostId(),
                 platform: platform,
                 content: content.substring(0, 500), // Limit content length for storage
                 status: result.isCompliant ? 'Compliant' : 'Non-Compliant',
-                violationReason: result.violations.map(v => v.type).join(', ') || 'None',
+                violationReason: result.violations.length > 0 ? 
+                    result.violations.map(v => v.type).join(', ') : 'None',
                 violations: result.violations,
                 riskLevel: result.riskLevel,
                 createdAt: serverTimestamp()
             };
 
-            await addDoc(collection(window.db, 'compliance-checks'), docData);
-            console.log('✓ Compliance check saved to Firestore successfully');
+            // Save to appropriate collection: {subcollection}/{docId}
+            const collectionRef = collection(window.db, subcollectionName);
+            await addDoc(collectionRef, docData);
+            
+            console.log(`✓ ${result.isCompliant ? 'Compliant' : 'Non-compliant'} check saved to Firestore subcollection successfully`);
             
         } catch (error) {
             console.error('✗ Error saving to Firestore:', error);

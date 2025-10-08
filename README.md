@@ -220,6 +220,8 @@ Result: ❌ Non-Compliant
 Violations: Financial Violation, Misleading Content
 ```
 
+> 📋 **For comprehensive platform examples:** See [PLATFORM_EXAMPLES.md](PLATFORM_EXAMPLES.md) for detailed compliant and non-compliant examples across all 7 platforms.
+
 ## 🔍 Algorithm Details & Implementation
 
 ### 🌲 Trie Data Structure Implementation

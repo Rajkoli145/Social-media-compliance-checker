@@ -86,52 +86,6 @@
                 </div>
             </div>
 
-            <div class="funnel-section">
-                <h3>Business Funnel Impact</h3>
-                <p class="funnel-description">
-                    Only compliant posts are allowed into the funnel; non-compliant posts are blocked to protect brand reputation.
-                </p>
-                <div class="funnel-container">
-                    <div class="funnel-stage">
-                        <div class="funnel-box prospects">
-                            <h4>Prospects</h4>
-                            <p id="prospectsCount">1000</p>
-                            <small>Total audience reached</small>
-                        </div>
-                    </div>
-                    <div class="funnel-arrow"><span class="material-symbols-outlined">arrow_forward</span></div>
-                    <div class="funnel-stage">
-                        <div class="funnel-box qualified">
-                            <h4>Qualified</h4>
-                            <p id="qualifiedCount">0</p>
-                            <small>Compliant posts only</small>
-                        </div>
-                    </div>
-                    <div class="funnel-arrow"><span class="material-symbols-outlined">arrow_forward</span></div>
-                    <div class="funnel-stage">
-                        <div class="funnel-box customers">
-                            <h4>Customers</h4>
-                            <p id="customersCount">0</p>
-                            <small>Converted leads</small>
-                        </div>
-                    </div>
-                    <div class="funnel-arrow"><span class="material-symbols-outlined">arrow_forward</span></div>
-                    <div class="funnel-stage">
-                        <div class="funnel-box loyal">
-                            <h4>Loyal</h4>
-                            <p id="loyalCount">0</p>
-                            <small>Repeat customers</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="funnel-blocked">
-                    <div class="blocked-content">
-                        <h4>🚫 Blocked Content</h4>
-                        <p id="blockedCount">0</p>
-                        <small>Non-compliant posts prevented from reaching customers</small>
-                    </div>
-                </div>
-            </div>
         </main>
 
         <!-- Post Details Modal -->
@@ -163,7 +117,7 @@
         window.firebaseApp = initializeApp(window.firebaseConfig);
         window.db = getFirestore(window.firebaseApp);
     </script>
-    <script src="firebase-config.js"></script>
-    <script src="dashboard.js"></script>
+    <script src="firebase-config.js?v=3"></script>
+    <script src="dashboard.js?v=3"></script>
 </body>
 </html>
